@@ -1,17 +1,24 @@
 import sys
 import cx_Oracle
+import string
+import getpass
 
 def connectToSQL(username, password):
     print("\nConnecting...")
-    print(username, password)
-    connStr = username + "/" + password
-    connStr = 'username/password@host'
-    return 
+    
+    host = "@gwynne.cs.ualberta.ca:1521/CRS"
+    connStr = username + "/" + password + host
+
+    connection = cx_Oracle.connect(connStr)
+    curs = connection.cursor()
+
+    return 0
 
 def login():
     print("User information")
-    username = input("Enter a username: ")
-    password = input("Enter a password: ") 
+    username = input("Username: ")
+    password = getpass.getpass()
+    
     return username, password
 
 
