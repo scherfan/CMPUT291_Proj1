@@ -1,0 +1,12 @@
+*** CMPUT 291 Project 1 ***
+
+Team Members:
+ - Brandon Smolley
+ - Kathleen Baker
+ - Steven Cherfan
+
+*** Running the project ***
+Open a terminal in the directory that has project1.py and run.
+	python3 project1.py
+
+This will run open the program for use in the command line.
