@@ -1,9 +1,19 @@
+"""
+Group members: 
+    Steven Cherfan
+    Kathleen Baker
+    Brandon Smolley
+"""
+
 import sys
 import cx_Oracle
 import string
 import getpass
+from prescribeTest import *
+
 
 def mainMenu(username):
+    valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
     print("Hello", username + "!\n")
     print("This is the main menu, from here you can: ")
     print("1) Prescribe a test")
@@ -14,7 +24,11 @@ def mainMenu(username):
     print("6) Search for patients who haven't taken important tests")
     print("Type 'exit' to close this application")
 
-    result = input("Enter task number: ")
+    result = ""
+    while result not in valid_input:
+        result = input("\nEnter task number: ")
+        if result not in valid_input:
+            print("Please enter a valid command")
 
     return result
 
@@ -40,30 +54,34 @@ def connectToSQL(username, password):
 def menuOptionSelected(result):
     if result == "exit":
         return
+
     elif int(result) == 1:
         # Call prescribeTest()
-        print(int(result))
-        return
+        prescribeTest()
+        #print(int(result))
+
     elif int(result) == 2:
         # Call enterTestResult()
         print(int(result))
-        return
+
     elif int(result) == 3:
         # Call updatePatient()
         print(int(result))
-        return
+
     elif int(result) == 4:
         # Call searchPatient()
         print(int(result))
-        return
+
     elif int(result) == 5:
         # Call searchDoctor()
         print(int(result))
-        return
+
     elif int(result) == 6:
         # Call alarmingPatient()
         print(int(result))
-        return
+
+
+    return
 
 
 def login():
@@ -80,7 +98,8 @@ def main():
     menuOptionSelected(result)
     #print(result)  
     connection.close()
-    print("Connection closed")
+    #prescribeTest()
+    print("\nConnection closed")
 
 if __name__ == "__main__":
     main()
