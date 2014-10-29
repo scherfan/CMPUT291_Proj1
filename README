@@ -7,6 +7,6 @@ Team Members:
 
 *** Running the project ***
 Open a terminal in the directory that has project1.py and run.
-	python3 project1.py
+	python3 startProgram.py
 
 This will run open the program for use in the command line.
