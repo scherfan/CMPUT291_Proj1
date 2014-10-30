@@ -1,17 +1,17 @@
-*** CMPUT 291 Project 1 ***
+***CMPUT 291 Project 1***
 
 Team Members:
  - Brandon Smolley
  - Kathleen Baker
  - Steven Cherfan
 
-*** Running the project ***
+***Running the project***
 Open a terminal in the directory that has project1.py and run.
 	python3 startProgram.py
 
 This will run open the program for use in the command line.
 
-*** Transferring files To and From GitHub ***
+***Transferring files To and From GitHub***
 To setup a local repo find a directory to hold the repo and enter the following in the command line:
 	git clone <url.git>
 
