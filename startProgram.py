@@ -55,9 +55,7 @@ def menuOptionSelected(result, connection, curs):
         return
 
     elif int(result) == 1:
-        # Call prescribeTest()
         prescribeTest(connection, curs)
-        #print(int(result))
 
     elif int(result) == 2:
         # Call enterTestResult()
