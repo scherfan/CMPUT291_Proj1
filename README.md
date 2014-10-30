@@ -13,14 +13,14 @@ This will run open the program for use in the command line.
 
 ***Transferring files To and From GitHub***   
 To setup a local repo find a directory to hold the repo and enter the following in the command line:   
-	git clone <url.git>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git clone <url.git>
 
 Grabbing updates from the repo and storing to the local repo is done using:   
-	git pull
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git pull
 
 Sending updates is done using the following process, from the local project repo:   
-	git add --a   
-	git commit -m "a description of your changes"  
-	git push   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git add --a   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git commit -m "a description of your changes"   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git push   
 
 Always pull before you push :)
