@@ -11,7 +11,6 @@ import string
 import getpass
 from prescribeTest import *
 
-
 def mainMenu(username):
     valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
     print("Hello", username + "!\n")
@@ -49,15 +48,15 @@ def connectToSQL(username, password):
         print( sys.stderr, "Oracle code:", error.code)
         print( sys.stderr, "Oracle message:", error.message)
 
-    return connection
+    return connection, curs
 
-def menuOptionSelected(result):
+def menuOptionSelected(result, connection, curs):
     if result == "exit":
         return
 
     elif int(result) == 1:
         # Call prescribeTest()
-        prescribeTest()
+        prescribeTest(connection, curs)
         #print(int(result))
 
     elif int(result) == 2:
@@ -93,9 +92,9 @@ def login():
 
 def main():
     username,password = login()
-    connection = connectToSQL(username, password)
+    connection, curs = connectToSQL(username, password)
     result = mainMenu(username)  
-    menuOptionSelected(result)
+    menuOptionSelected(result, connection, curs)
     #print(result)  
     connection.close()
     #prescribeTest()
