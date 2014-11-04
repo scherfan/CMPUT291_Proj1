@@ -10,6 +10,7 @@ import cx_Oracle
 import string
 import getpass
 from prescribeTest import *
+from enterTestResult import *
 
 def mainMenu(username):
     valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
@@ -59,8 +60,9 @@ def menuOptionSelected(result, connection, curs):
 
     elif int(result) == 2:
         # Call enterTestResult()
-        print(int(result))
-
+       # print(int(result))
+       enterTestResult()
+       
     elif int(result) == 3:
         # Call updatePatient()
         print(int(result))
