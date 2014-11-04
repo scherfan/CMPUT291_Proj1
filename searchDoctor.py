@@ -31,9 +31,9 @@ def searchDoctor(connection, curs):
         else:
             print("Please enter a valid field.\n")
 
-            if docID != "":
-                print(docID)
-                print('\n')
-            else:
-                print(docNum)
-                print(timePeriod)
+    if docID != "":
+        print(docID)
+        print('\n')
+    else:
+        print(docNum)
+        print(timePeriod)
