@@ -128,6 +128,14 @@ INSERT INTO patient VALUES(
 INSERT INTO patient VALUES(
 	7878, 'Mister Man', '1546 Man Cave Cave', to_date('12/09/1845', 'MM/DD/YYYY'), '5551489875'
 );
+insert into patient values(1000, 'Sherlock Holmes', '221b Baker St London', date '1975-01-01', '7801234567');
+insert into patient values(1001, 'John Watson', '155 St Vancouver', date '1980-05-19', '7800000000');
+insert into patient values(1002, 'Richard Richards', '10001 Ontario', date '1942-03-18', '7800987654');
+insert into patient values(1003, 'Dr House', '100 St Edmonton', date '1964-06-11', '7804355555');
+insert into patient values(1004, 'Dr Wilson', '200 St Edmonton', date '1988-05-04', '7804251234');
+insert into patient values(1005, 'James Kirk', '911 Edmonton', date '1988-07-14', '7809696969');
+insert into patient values(1006, 'Spock', '11111 11 Ave Edmonton', date '1942-02-14', '7801112222');
+
 /* Doctors */
 insert into doctor values
 (
@@ -193,7 +201,8 @@ INSERT INTO doctor VALUES(
 INSERT INTO doctor VALUES(
 	598, '94 Vancouver Clinic', '4448739821', '9991249851', 7878
 );
-
+insert into doctor values(2000, '19191 Edmonton', '7809098000', '7804355555', 1003);
+insert into doctor values(2001, '10000 Edmonton', '7808008000', '7804251234', 1004);
 
 /* Medical Labs */
 insert into medical_lab values
@@ -254,6 +263,11 @@ INSERT INTO medical_lab VALUES(
 INSERT INTO medical_lab VALUES(
 	'Lab Ten', '10 Medical Lane', '2229217888'
 );
+insert into medical_lab values('Lab 11', '10101 Edmonton', '7801010101');
+insert into medical_lab values('Lab 12', '99999 Edmonton', '7809999999');
+insert into medical_lab values('Lab 13', '111 11 Edmonton', '7808675234');
+insert into medical_lab values('Lab 14', '1234 Edmonton', '7802223333');
+
 
 /* test types */
 insert into test_type values
@@ -275,7 +289,7 @@ INSERT INTO test_type VALUES(
 );
 
 INSERT INTO test_type VALUES(
-	18746, 'bone marrow check', 'Compatibility test', 'Take bone marrow from person'
+n	18746, 'bone marrow check', 'Compatibility test', 'Take bone marrow from person'
 );
 
 INSERT INTO test_type VALUES(
@@ -401,6 +415,14 @@ INSERT INTO can_conduct VALUES(
 INSERT INTO can_conduct VALUES(
 	'Lab Ten', 54231
 );
+insert into can_conduct values('Lab 11', 15470);
+insert into can_conduct values('Lab 12', 18746);
+insert into can_conduct values('Lab 11', 97878);
+insert into can_conduct values('Lab 13', 18746);
+insert into can_conduct values('Lab 13', 97878);
+insert into can_conduct values('Lab 11', 18746);
+insert into can_conduct values('Lab 12', 15470);
+insert into can_conduct values('Lab 14', 15470);
 
 /* Patients and the test's they are not allowed to take */
 insert into not_allowed values
@@ -513,6 +535,9 @@ INSERT INTO not_allowed VALUES(
 INSERT INTO not_allowed VALUES(
 	7878, 54231
 );
+insert into not_allowed values(1000, 15470);
+insert into not_allowed values(1001, 97878);
+insert into not_allowed values(1004, 18746);
 
 /* patient's test records */
 insert into test_record values
@@ -679,3 +704,28 @@ INSERT INTO test_record VALUES(
 INSERT INTO test_record VALUES(	
 	8, 15470, 1544, 354, 'Lab One', 'normal', to_date('09/13/2013', 'MM/DD/YYYY'), to_date('09/19/2013', 'MM/DD/YYYY')
 );
+insert into test_record values(1, 15470, 1002, 2000, 'Lab 11', 'abnormal', date '2014-09-14', date '2014-10-04');
+insert into test_record values(2, 15470, 1003, 2000, 'Lab 12', 'abnormal', date '2013-01-01', date '2013-01-11');
+insert into test_record values(3, 15470, 1004, 2001, 'Lab 11', 'normal', date '2013-09-14', date '2013-10-04');
+insert into test_record values(4, 18746, 1004, 2001, 'Lab 12', 'normal', date '2013-08-14', date '2014-09-04');
+insert into test_record values(5, 15470, 1004, 2001, 'Lab 11', 'normal', date '2013-06-10', date '2013-07-01');
+insert into test_record values(6, 15470, 1004, 2001, 'Lab 11', 'normal', date '2013-12-01', date '2014-01-03');
+insert into test_record values(7, 18746, 1002, 2000, 'Lab 12', 'normal', date '2013-11-14', date '2013-11-20');
+insert into test_record values(8, 18746, 1002, 2001, 'Lab 12', 'normal', date '2014-03-13', date '2014-04-13');
+insert into test_record values(9, 18746, 1000, 2001, 'Lab 13', 'normal', date '2014-04-09', date '2014-04-15');
+insert into test_record values(10, 15470, 1003, 2000, 'Lab 11', 'normal', date '2011-01-01', date '2011-01-11');
+insert into test_record values(11, 18746, 1000, 2000, 'Lab 13', 'abnormal', date '2012-02-21', date '2012-03-02');
+insert into test_record values(12, 18746, 1000, 2000, 'Lab 13', 'normal', date '2012-03-20', date '2012-03-25');
+insert into test_record values(13, 18746, 1001, 2001, 'Lab 12', 'abnormal', date '2014-03-20', date '2014-04-04');
+insert into test_record values(14, 15470, 1005, 2001, 'Lab 12', 'abnormal', date '2014-05-20', date '2014-06-04');
+insert into test_record values(15, 18746, 1005, 2000, 'Lab 11', 'abnormal', date '2013-01-20', date '2013-01-21');
+insert into test_record values(16, 18746, 1006, 2000, 'Lab 11', 'abnormal', date '2012-08-21', date '2012-08-22');
+insert into test_record values(17, 97878, 1006, 2001, 'Lab 11', 'abnormal', date '2010-11-11', date '2010-12-02');
+insert into test_record values(18, 97878, 1004, 2001, 'Lab 13', 'abnormal', date '2011-11-11', date '2011-11-12');
+insert into test_record values(19, 97878, 1004, 2001, 'Lab 11', 'normal', date '2012-09-12', date '2012-09-22');
+insert into test_record values(20, 97878, 1005, 2000, 'Lab 11', 'normal', date '2010-10-05', date '2010-10-08');
+insert into test_record values(21, 15470, 1005, 2000, 'Lab 14', 'normal', date '2014-07-02', date '2014-07-08');
+
+
+
+
