@@ -285,15 +285,15 @@ insert into test_type values
 	'Proceed to administer Turing test.'
 );
 INSERT INTO test_type VALUES(
-	15470, 'CT scan', 'Can do CT scan', 'Do a CT scan'
+	15470, 'CT Scan', 'Can do CT scan', 'Do a CT scan'
 );
 
 INSERT INTO test_type VALUES(
-	18746, 'bone marrow check', 'Compatibility test', 'Take bone marrow from person'
+	18746, 'Bone Marrow Check', 'Compatibility test', 'Take bone marrow from person'
 );
 
 INSERT INTO test_type VALUES(
-	97878, 'X ray', 'N/A', 'Conduct X ray'
+	97878, 'X-Ray', 'N/A', 'Conduct X ray'
 );
 
 INSERT INTO test_type VALUES(
