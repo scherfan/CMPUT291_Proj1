@@ -19,18 +19,30 @@ def searchDoctor(connection, curs):
         else:
             print("Please enter a valid field.")
 
-    timePeriod = ""
+    dateStart = ""
+    dateEnd = ""
     while(1):
-        timePeriod = input("Enter a time interval(yyyy-mm-dd yyy-mm-dd):")
-        if timePeriod.count(' ') == 1:
-            timePeriod = timePeriod.split()
+        dateStart = input("Enter a start date(yyyy-mm-dd):")
+        if (dateStart[:4].isdigit() == True and dateStart[4] == '-'
+            and dateStart[5:7].isdigit() == True and dateStart[7] == '-'
+            and dateStart[8:10].isdigit() == True):
+            break
+        else:
+            print("Please enter a valid field.")
+    while(1):
+        dateEnd = input("Enter an end date(yyyy-mm-dd):")
+        if (dateEnd[:4].isdigit() == True and dateEnd[4] == '-'
+            and dateEnd[5:7].isdigit() == True and dateEnd[7] == '-'
+            and dateEnd[8:10].isdigit() == True):
             break
         else:
             print("Please enter a valid field.")
 
     if docID != "":
         print(docID)
-        print(timePeriod)
+        print(dateStart)
+        print(dateEnd)
     else:
         print(docNum)
-        print(timePeriod)
+        print(dateStart)
+        print(dateEnd)
