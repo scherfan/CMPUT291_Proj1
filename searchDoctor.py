@@ -7,8 +7,8 @@ stored in the database.
 def searchDoctor(connection, curs):
     docID = ""
     docNum = None
-    print("Search for information of all tests prescribed by a given doctor
-          during a specific time period.")
+    print("Search for information of all tests prescribed by a given doctor"
+         " during a specific time period.")
     while(1):
         docID = input("Enter a name or employee number: ")
         if docID.isdigit() == True:
