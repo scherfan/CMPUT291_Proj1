@@ -94,8 +94,10 @@ def login():
 def main():
     username,password = login()
     connection, curs = connectToSQL(username, password)
-    result = mainMenu(username)  
-    menuOptionSelected(result, connection, curs)
+    result = None
+    while(result != "exit"):
+        result = mainMenu(username)  
+        menuOptionSelected(result, connection, curs)
     #print(result)  
     connection.close()
     #prescribeTest()
