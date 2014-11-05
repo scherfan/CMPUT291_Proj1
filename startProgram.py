@@ -42,13 +42,13 @@ def connectToSQL(username, password):
 
     try:
         connection = cx_Oracle.connect(connStr)
-        print("Connected!")
+        print("Connected!\n")
         curs = connection.cursor()
 
     except cx_Oracle.DatabaseError as exc:
         error, = exc.args
-        print( sys.stderr, "Oracle code:", error.code)
-        print( sys.stderr, "Oracle message:", error.message)
+        print("Oracle code:", error.code)
+        print("Oracle message:", error.message)
 
     return connection, curs
 
@@ -87,13 +87,20 @@ def menuOptionSelected(result, connection, curs):
 def login():
     print("User information")
     username = input("Username: ")
-    password = getpass.getpass()   
+    password = getpass.getpass() 
     return username, password
 
 
-def main():
-    username,password = login()
-    connection, curs = connectToSQL(username, password)
+def main():  
+    error = True
+    while error == True:
+        try:
+            username,password = login()
+            connection, curs = connectToSQL(username, password)
+            error = False
+        except:
+            print("Failed to connect, please try again\n")
+
     result = None
     while(result != "exit"):
         result = mainMenu(username)  

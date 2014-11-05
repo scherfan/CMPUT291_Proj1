@@ -142,6 +142,8 @@ def checkAllowed(patient, testname, curs):
 	#print(patient, testname)
 	if type(patient) == str:
 		print("Patient is a string")
+		# TODO implement the code to search for patient based on name
+		
 	elif type(patient) == int:
 		#print("Patient is an integer")
 		try:
