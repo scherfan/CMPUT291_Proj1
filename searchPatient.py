@@ -43,8 +43,22 @@ def findTestRecords(patient, curs):
 		if len(results) == 0:
 			print("  No test records available")
 		else:
+			rnd = 1
 			for result in results:
-				print(result)
+				row = [result[0], result[1], result[2], result[3], result[4]]
+				for i in range(0, len(row)):
+					if row[i] == None:
+						row[i] = "N/A"
+
+				print("\nTest " + str(rnd))
+				output = "Patient Name: " + row[0]
+				output += "\nHealth Care Number: " + str(row[1])
+				output += "\nTest taken: " + row[2]
+				output += "\nDate taken: " + str(row[3])
+				output += "\nResult: " + row[4]
+				print(output)
+				rnd += 1
+				#print(result)
 		print('')
 
 	except:
