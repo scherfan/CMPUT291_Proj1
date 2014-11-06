@@ -60,24 +60,17 @@ def menuOptionSelected(result, connection, curs):
 
     elif int(result) == 1:
         prescribeTest(connection, curs)
-
     elif int(result) == 2:
         # Call enterTestResult()
-        # print(int(result))
         enterTestResult(connection, curs)
-       
     elif int(result) == 3:
         # Call updatePatient()
-        print(int(result))
         updatePatient(connection, curs)
-
     elif int(result) == 4:
         # Call searchPatient()
         print(int(result))
-
     elif int(result) == 5:
         # Call searchDoctor()
-        # print(int(result))
         searchDoctor(connection, curs)
     elif int(result) == 6:
         # Call alarmingPatient()
