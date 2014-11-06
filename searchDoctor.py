@@ -11,6 +11,7 @@ def searchDoctor(connection, curs):
         docID = input("Enter a name or employee number: ")
         if docID.isdigit() == True:
             docNum = int(docID)
+            docID = None
             break
         elif docID.isalnum() == False and docID.isdigit() == False:
             break
@@ -68,9 +69,9 @@ def searchDoctor(connection, curs):
             error, = exc.args
             print("Oracle code:", error.code)
             print("Oracle message:", error.message)
-    else:
+    elif docID == None:
         print("Search By:")
-        print("Doctor's Employee Number: " + docNum)
+        print("Doctor's Employee Number: " + str(docNum))
         print("Start date: " + dateStart)
         print("End Date: " + dateEnd)
 
