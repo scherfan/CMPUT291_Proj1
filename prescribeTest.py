@@ -1,5 +1,4 @@
 # Prescription file
-import random
 
 def prescribeTest(connection, curs):
 	
@@ -92,7 +91,11 @@ def getPatientId(name, curs):
 		query += "WHERE name LIKE '"+name+"'"
 		curs.execute(query)
 		result = curs.fetchall()
-		return result[0][0]
+		if len(result) == 0:
+			print('  No patient found\n')
+			return 1
+		else:
+			return result[0][0]
 
 	except:
 		print("Error at getPatientId")

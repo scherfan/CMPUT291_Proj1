@@ -1,7 +1,5 @@
 # Search for a patient test records
-""" List the health_care_no, patient name, 
-    test type name, testing date, and test 
-    result of all test records """
+
 from prescribeTest import *
 
 def searchPatient(connection, curs):
@@ -22,10 +20,14 @@ def findTestRecords(patient, curs):
 	if type(patient) == str:
 		patient_id = getPatientId(patient, curs)
 		patient_name = patient
+		if patient_id == 1:
+			return
 		#print(patient_id)
 	else:
 		patient_id = patient
 		patient_name = getPatientName(patient_id, curs)
+		if patient_name == 1:
+			return
 		#print(patient_id, patient_name)
 
 
@@ -38,8 +40,11 @@ def findTestRecords(patient, curs):
 		#print(query)
 		curs.execute(query)
 		results = curs.fetchall()
-		for result in results:
-			print(result)
+		if len(results) == 0:
+			print("  No test records available")
+		else:
+			for result in results:
+				print(result)
 		print('')
 
 	except:
@@ -53,6 +58,9 @@ def getPatientName(id, curs):
 		query += "WHERE health_care_no = " + str(id)
 		curs.execute(query)
 		result = curs.fetchall()
+		if len(result) == 0:
+			print("  No patient found\n")
+			return 1
 		return result[0][0]
 
 	except:
