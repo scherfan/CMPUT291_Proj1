@@ -12,12 +12,12 @@ import random
 import getpass
 from prescribeTest import *
 from enterTestResult import *
+from searchPatient import *
 from searchDoctor import *
 from updatePatient import *
 
 def mainMenu(username):
     valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
-    print("Hello", username + "!\n")
     print("This is the main menu, from here you can: ")
     print("1) Prescribe a test")
     print("2) Enter a test result")
@@ -46,6 +46,7 @@ def connectToSQL(username, password):
         connection = cx_Oracle.connect(connStr)
         print("Connected!\n")
         curs = connection.cursor()
+        print("Hello", username + "!\n")
 
     except cx_Oracle.DatabaseError as exc:
         error, = exc.args
@@ -62,27 +63,20 @@ def menuOptionSelected(result, connection, curs):
         prescribeTest(connection, curs)
 
     elif int(result) == 2:
-        # Call enterTestResult()
         enterTestResult(connection, curs)
 
     elif int(result) == 3:
-        # Call updatePatient()
         updatePatient(connection, curs)
 
     elif int(result) == 4:
-        # Call searchPatient()
-        print(int(result))
+        searchPatient(connection, curs)
 
     elif int(result) == 5:
-        # Call searchDoctor()
         searchDoctor(connection, curs)
 
     elif int(result) == 6:
         # Call alarmingPatient()
         print(int(result))
-
-
-    return
 
 
 def login():
