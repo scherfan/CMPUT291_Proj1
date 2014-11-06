@@ -89,14 +89,17 @@ def login():
 
 def main():  
     error = True
+    i = 0
     while error == True:
+        if i > 3:
+            return
         try:
             username,password = login()
             connection, curs = connectToSQL(username, password)
             error = False
         except:
             print("Failed to connect, please try again\n")
-
+            i += 1
     result = None
     while(result != "exit"):
         result = mainMenu(username)  
