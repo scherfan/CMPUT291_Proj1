@@ -1,4 +1,5 @@
 # Prescription file
+import random
 
 def prescribeTest(connection, curs):
 	
@@ -37,12 +38,17 @@ def prescribeTest(connection, curs):
 				patient = int(patient_id)
 
 	# Check if patient can take the test
-	error = True
-	while error == True:
-		error = checkAllowed(patient, testname, curs)
+	error = checkAllowed(patient, testname, curs)
+	if error == False:
+		id = random.randint(0, 9999999)
+		print(id)
+		#addtTest(patient, id, testname, curs)
 
+	#TODO prescribe the test, auto generate test_id
+	
 
-
+def addTest(patient, id, testname, curs):
+	return
 
 def checkForDoctorName(name, curs):
 	try:
@@ -141,9 +147,31 @@ def findPatientId(patient_id, curs):
 def checkAllowed(patient, testname, curs):
 	#print(patient, testname)
 	if type(patient) == str:
-		print("Patient is a string")
+		#print("Patient is a string")
 		# TODO implement the code to search for patient based on name
-		
+		try:
+			query = "SELECT DISTINCT p.name "
+			query += "FROM not_allowed n, patient p, test_type t "
+			query += "WHERE t.test_name LIKE '"+testname+"' "
+			query += "AND p.name LIKE '"+patient+"' " 
+			query += "AND p.health_care_no <> n.health_care_no "
+			query += "AND t.type_id = n.test_id"
+			curs.execute(query)
+			result = curs.fetchall()
+
+			#print(result)
+
+			if len(result) == 0:
+				print("  Patient cannot take this test!")
+			elif len(result) == 1:
+				if result[0][0] == patient:
+					print("  Patient can take this test")
+			return False
+
+		except:
+			print("Error at checkAllowed via Name")
+			return True
+
 	elif type(patient) == int:
 		#print("Patient is an integer")
 		try:
@@ -165,5 +193,6 @@ def checkAllowed(patient, testname, curs):
 			return False
 
 		except:
-			print("Error at checkAllowed")
+			print("Error at checkAllowed via Id")
 			return True
+

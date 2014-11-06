@@ -8,6 +8,7 @@ Group members:
 import sys
 import cx_Oracle
 import string
+import random
 import getpass
 from prescribeTest import *
 from enterTestResult import *
