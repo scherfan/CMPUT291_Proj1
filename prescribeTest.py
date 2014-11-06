@@ -39,16 +39,76 @@ def prescribeTest(connection, curs):
 
 	# Check if patient can take the test
 	error = checkAllowed(patient, testname, curs)
-	if error == False:
-		id = random.randint(0, 9999999)
-		print(id)
-		#addtTest(patient, id, testname, curs)
 
-	#TODO prescribe the test, auto generate test_id
+	# Insert the test record into the Database
+	if error == False:
+		id = generateId()
+		insertTest(patient, doctor, id, testname, connection, curs)
+
 	
 
-def addTest(patient, id, testname, curs):
-	return
+def insertTest(patient, doctor, test_num, testname, connection, curs):
+	if type(patient) == str:
+		patient = getPatientId(patient, curs)
+
+	if type(doctor) == str:
+		doctor = getDoctorId(doctor, curs)
+
+	test_id = getTestId(testname, curs)
+
+	try:
+		query = "INSERT INTO test_record "
+		query += "VALUES ("
+		query += str(test_num) + ", "
+		query += str(test_id) + ", "
+		query += str(patient) + ", "
+		query += str(doctor) + ", "
+		query += "NULL, NULL, NULL, NULL)"
+		curs.execute(query)
+		connection.commit()
+
+	except:
+		print('Error at addTest')
+
+
+
+def getDoctorId(doctor, curs):
+	try:
+		query = "SELECT d.employee_no "  
+		query += "FROM patient p, doctor d "
+		query += "WHERE p.name LIKE '"+doctor+"' "
+		query += "AND p.health_care_no = d.health_care_no"
+		curs.execute(query)
+		result = curs.fetchall()
+		return result[0][0]
+
+	except:
+		print('Error at getDoctorid')
+
+def getPatientId(name, curs):
+	try:
+		query = "SELECT health_care_no "
+		query += "FROM patient "
+		query += "WHERE name LIKE '"+name+"'"
+		curs.execute(query)
+		result = curs.fetchall()
+		return result[0][0]
+
+	except:
+		print("Error at getPatientId")
+
+def generateId():
+	with open('idTracker.txt', 'r+') as file:
+		id = file.read()
+		id = int(id)
+		new_id = id + 1
+		file.seek(0)
+		file.write(str(new_id))
+		file.truncate()
+		file.close()
+
+	#print(id, new_id)
+	return id
 
 def checkForDoctorName(name, curs):
 	try:
@@ -105,6 +165,19 @@ def findTest(testname, curs):
 	except:
 		print("Error at findTest")
 		return True
+
+def getTestId(testname, curs):
+	try:
+		query = "SELECT type_id "
+		query += "FROM test_type "
+		query += "WHERE test_name LIKE '"+testname+"'"
+		curs.execute(query)
+		result = curs.fetchall()
+		return result[0][0]
+
+	except:
+		print("Error at getTestid")
+		return 0
 
 
 def findPatientName(patient_name, curs):

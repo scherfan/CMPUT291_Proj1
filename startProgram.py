@@ -60,18 +60,23 @@ def menuOptionSelected(result, connection, curs):
 
     elif int(result) == 1:
         prescribeTest(connection, curs)
+
     elif int(result) == 2:
         # Call enterTestResult()
         enterTestResult(connection, curs)
+
     elif int(result) == 3:
         # Call updatePatient()
         updatePatient(connection, curs)
+
     elif int(result) == 4:
         # Call searchPatient()
         print(int(result))
+
     elif int(result) == 5:
         # Call searchDoctor()
         searchDoctor(connection, curs)
+
     elif int(result) == 6:
         # Call alarmingPatient()
         print(int(result))
@@ -98,6 +103,7 @@ def main():
             print("Failed to connect, please try again\n")
 
     result = None
+    id = generateId()
     while(result != "exit"):
         result = mainMenu(username)  
         menuOptionSelected(result, connection, curs)
