@@ -12,6 +12,7 @@ import getpass
 from prescribeTest import *
 from enterTestResult import *
 from searchDoctor import *
+from updatePatient import *
 
 def mainMenu(username):
     valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
@@ -67,6 +68,7 @@ def menuOptionSelected(result, connection, curs):
     elif int(result) == 3:
         # Call updatePatient()
         print(int(result))
+        updatePatient(connection, curs)
 
     elif int(result) == 4:
         # Call searchPatient()
