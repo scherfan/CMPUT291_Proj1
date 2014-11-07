@@ -15,6 +15,7 @@ from enterTestResult import *
 from searchPatient import *
 from searchDoctor import *
 from updatePatient import *
+from alarmingPatient import *
 
 def mainMenu(username):
     valid_input = ["exit", "1", "2", "3", "4", "5", "6"]
@@ -24,7 +25,7 @@ def mainMenu(username):
     print("3) Update patient information")
     print("4) Search for a patient")
     print("5) Search for a doctor")
-    print("6) Search for patients who haven't taken important tests")
+    print("6) Search for patients who have reached alarming age but haven't taken a type of test")
     print("Type 'exit' to close this application")
 
     result = ""
@@ -75,9 +76,7 @@ def menuOptionSelected(result, connection, curs):
         searchDoctor(connection, curs)
 
     elif int(result) == 6:
-        # Call alarmingPatient()
-        print(int(result))
-
+        alarmingPatient(connection, curs)
 
 def login():
     print("User information")

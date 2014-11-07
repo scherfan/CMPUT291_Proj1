@@ -1,7 +1,4 @@
-import sys
 import cx_Oracle
-import string
-import getpass
 import datetime
 
 def updatePatient(connection, curs):
@@ -10,34 +7,43 @@ def updatePatient(connection, curs):
         query = "SELECT * FROM patient WHERE health_care_no = " + patient_id
         curs.execute(query)
         result = curs.fetchall()
+        print(result)
         #patient not in table yet
         if len(result) == 0:
             print("Patient doesn't exist - insert new patient.\n")
             name = input("Enter patient name: ")
+            while name == '':
+                print("Patient name cannot be empty.")
+                name = input("Enter patient name: ")
             address = input("Enter patient's address: ")
             birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
+            result = validate(birth)
+            while result == False:
+                birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
+                result = validate(birth)
             phone = input("Enter patient's phone number: ")
             patient = (patient_id, name, address, birth, phone)
             print(patient)
             query = "INSERT INTO patient values ("+patient_id+", '"+name+"', '"+address+"', date '"+birth+"', '"+phone+"')"
             try:
-                #print(query)
-                #this doesn't work - hangs
                 curs.execute(query)
                 connection.commit()
                 print("Patient added.\n")
             except:
-                print("Error doing stuff")
+                print("Error inserting patient.")
             return  
         else:
             #can update patient info - ask which info
             print("\nPatient selected:")
             print("Health care number: "+str(result[0][0]))
             print("Name: "+result[0][1])
-            print("Address: "+result[0][2])
-            print("Birth date: "+str(result[0][3])[:10])
-            print("Phone number: "+result[0][4]+"\n")
-            print("Update patient info - enter new info or press enter to skip.")
+            if result[0][2] != None:
+                print("Address: "+result[0][2])
+            if str(result[0][3]) != None:
+                print("Birth date: "+str(result[0][3])[:10])
+            if result[0][4] != None:
+                print("Phone number: "+result[0][4])
+            print("\nUpdate patient info - enter new info or press enter to skip.")
             name = input("Enter patient name: ")
             if name != "":
                 try:
@@ -58,6 +64,10 @@ def updatePatient(connection, curs):
             birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
             if birth != '':
                 try:
+                    result = validate(birth)
+                    while result == False:
+                        birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
+                        result = validate(birth)
                     query = "UPDATE patient set birth_day = date '"+birth+"' where health_care_no = "+patient_id
                     curs.execute(query)
                     connection.commit()
@@ -75,4 +85,12 @@ def updatePatient(connection, curs):
         return
     except:
         print("\nError finding patient health care number - must be an integer.\n")
+
+def validate(birth):
+    try:
+        datetime.datetime.strptime(birth, "%Y-%m-%d")
+        return True
+    except:
+        print("Must be valid date in format YYYY-MM-DD.")
+        return False
 
