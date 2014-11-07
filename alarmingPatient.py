@@ -1,7 +1,6 @@
 import cx_Oracle
 
 def alarmingPatient(connection, curs):
-    test = input("Input name of test: ")
     try:
         query = "DROP VIEW medical_risk"
         curs.execute(query)
@@ -28,7 +27,17 @@ HAVING (COUNT(distinct tr3.test_id) / COUNT(distinct tr4.test_id)) >= ALL(SELECT
 										GROUP BY tr5.type_id
 										)"""
         curs.execute(query2)
-        query3 = """SELECT health_care_no, name, address, phone
+        while (True):
+            test = input("Input name of test: ")
+            query = "SELECT type_id FROM test_type WHERE test_name = '"+test+"'"
+            try:
+                curs.execute(query)
+                test_id = curs.fetchall()
+                if len(test_id) == 0:
+                    # test doesn't exist - ask again
+                    print("Test doesn't exist.")
+                else:
+                    query3 = """SELECT health_care_no, name, address, phone
 FROM (SELECT p.health_care_no, p.name, p.address, p.phone, m.medical_type
 	FROM patient p, medical_risk m
 	WHERE p.birth_day <= (sysdate - ((m.alarming_age-1)*365))
@@ -41,12 +50,32 @@ FROM (SELECT p.health_care_no, p.name, p.address, p.phone, m.medical_type
 WHERE medical_type IN (SELECT type_id
                        FROM test_type
                        WHERE test_name = '"""+test+"')"
+                    try:
+                        curs.execute(query3)
+                        result = curs.fetchall()
+                        if len(result) == 0:
+                            print("No patients of alarming age for this test.")
+                        i = 0
+                        while (i < len(result)):
+                            print("\nHealth care number: "+str(result[i][0]))
+                            print("Name: "+result[i][1])
+                            print("Address: "+result[i][2])
+                            print("Phone number: "+result[i][3]+"\n")
+                            i += 1
+                        break
+                    except cx_Oracle.DatabaseError as ex:
+                        error, = ex.args
+                        print("Error code ="+str(error.code))
+                        print("Error message ="+str(error.message))
+            except cx_Oracle.DatabaseError as ex:
+                error, = ex.args
+                print("Error message ="+str(error.message))
 
-        curs.execute(query3)
-        result = curs.fetchall()
-        print(result)
     except cx_Oracle.DatabaseError as ex:
-        error, = ex.args
-        print("Error code ="+str(error.code))
-        print("Error message ="+str(error.message))
+            error, = ex.args
+            print("Error code ="+str(error.code))
+            print("Error message ="+str(error.message))
+            print("Error finding test")
+
+    return
        
