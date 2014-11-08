@@ -4,6 +4,7 @@ def alarmingPatient(connection, curs):
     try:
         query = "DROP VIEW medical_risk"
         curs.execute(query)
+        # create medical_risk view
         query2 = """
 CREATE VIEW medical_risk
 (medical_type, abnormal_rate, alarming_age) 
@@ -29,6 +30,7 @@ HAVING (COUNT(distinct tr3.test_id) / COUNT(distinct tr4.test_id)) >= ALL(SELECT
         curs.execute(query2)
         while (True):
             test = input("Input name of test: ")
+            # make sure test exists
             query = "SELECT type_id FROM test_type WHERE test_name = '"+test+"'"
             try:
                 curs.execute(query)
@@ -37,6 +39,7 @@ HAVING (COUNT(distinct tr3.test_id) / COUNT(distinct tr4.test_id)) >= ALL(SELECT
                     # test doesn't exist - ask again
                     print("Test doesn't exist.")
                 else:
+                    # test does exist - get patient info from view
                     query3 = """SELECT health_care_no, name, address, phone
 FROM (SELECT p.health_care_no, p.name, p.address, p.phone, m.medical_type
 	FROM patient p, medical_risk m
@@ -54,8 +57,10 @@ WHERE medical_type IN (SELECT type_id
                         curs.execute(query3)
                         result = curs.fetchall()
                         if len(result) == 0:
+                            # either no patients have taken the test or no patients of alarming age
                             print("No patients of alarming age for this test.")
                         i = 0
+                        #print results
                         while (i < len(result)):
                             print("\nHealth care number: "+str(result[i][0]))
                             print("Name: "+result[i][1])

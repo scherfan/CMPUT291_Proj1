@@ -5,6 +5,7 @@ def updatePatient(connection, curs):
     while(True):
         patient_id = input("\nEnter patient health care number: ")
         try:
+            # get info about patient
             query = "SELECT * FROM patient WHERE health_care_no = " + patient_id
             curs.execute(query)
             result = curs.fetchall()
@@ -29,8 +30,10 @@ def updatePatient(connection, curs):
                 updateTestNotAllowed(connection, curs, patient_id)
                 break
                 return
-        except:
-            print("\nError finding patient health care number - must be an integer.\n")
+        except cx_Oracle.DatabaseError as ex:
+            error, = ex.args
+            print("Error message ="+str(error.message))
+            print("Error finding patient health care number - must be an integer.\n")
 
 # for patients who are already in system
 def updateTestNotAllowed(connection, curs, patient_id):
@@ -96,6 +99,7 @@ def newPatient(connection, curs, patient_id):
         name = input("Enter patient name: ")
     address = input("Enter patient's address: ")
     birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
+    #need to check if birthdate in the past??
     result = validate(birth)
     while result == False:
         birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
@@ -106,8 +110,11 @@ def newPatient(connection, curs, patient_id):
     try:
         curs.execute(query)
         connection.commit()
-        print("Patient added.\n") # print what was added
-    except:
+        print("Patient added.\n") # print what was added?
+
+    except cx_Oracle.DatabaseError as ex:
+        error, = ex.args
+        print("Error message ="+str(error.message))
         print("Error inserting patient.")
     return
 
@@ -117,11 +124,13 @@ def oldPatient(connection, curs, patient_id):
     name = input("Enter patient name: ")
     if name != "":
         try:
-            # works: needs '' around name
+            # needs '' around name
             query = "UPDATE patient set name = '"+name+"' where health_care_no = "+patient_id
             curs.execute(query)
             connection.commit()
-        except:
+        except cx_Oracle.DatabaseError as ex:
+            error, = ex.args
+            print("Error message ="+str(error.message))
             print("Error updating name - maximum length is 100 characters.")
     address = input("Enter patient's address: ")
     if address != '':
@@ -129,7 +138,9 @@ def oldPatient(connection, curs, patient_id):
             query = "UPDATE patient set address = '"+address+"' where health_care_no = "+patient_id
             curs.execute(query)
             connection.commit()
-        except:
+        except cx_Oracle.DatabaseError as ex:
+            error, = ex.args
+            print("Error message ="+str(error.message))
             print("Error updating address - maximum length is 200 characters.")
     birth = input("Enter patient's birth date in YYYY-MM-DD format: ")
     if birth != '':
@@ -143,7 +154,9 @@ def oldPatient(connection, curs, patient_id):
                 query = "UPDATE patient set birth_day = date '"+birth+"' where health_care_no = "+patient_id
                 curs.execute(query)
                 connection.commit()
-        except:
+        except cx_Oracle.DatabaseError as ex:
+            error, = ex.args
+            print("Error message ="+str(error.message))
             print("Error updating birth date - must be in YYYY-MM-DD format.")
     phone = input("Enter patient's phone number: ")
     if phone != '':
@@ -151,7 +164,9 @@ def oldPatient(connection, curs, patient_id):
             query = "UPDATE patient set phone = '"+phone+"' where health_care_no = "+patient_id
             curs.execute(query)
             connection.commit()
-        except:
+        except cx_Oracle.DatabaseError as ex:
+            error, = ex.args
+            print("Error message ="+str(error.message))
             print("Error updating phone - maximum length is 10 digits.")
     print("Patient info updated.\n")
     return
@@ -160,6 +175,8 @@ def validate(birth):
     try:
         datetime.datetime.strptime(birth, "%Y-%m-%d")
         return True
-    except:
+    except cx_Oracle.DatabaseError as ex:
+        error, = ex.args
+        print("Error message ="+str(error.message))
         print("Must be valid date in format YYYY-MM-DD.")
         return False
