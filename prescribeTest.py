@@ -230,19 +230,25 @@ def checkAllowed(patient, testname, curs):
 			query += "FROM not_allowed n, patient p, test_type t "
 			query += "WHERE t.test_name LIKE '"+testname+"' "
 			query += "AND p.name LIKE '"+patient+"' " 
-			query += "AND p.health_care_no <> n.health_care_no "
+			query += "AND p.health_care_no = n.health_care_no "
 			query += "AND t.type_id = n.test_id"
 			curs.execute(query)
 			result = curs.fetchall()
 
 			#print(result)
-
-			if len(result) == 0:
-				print("  Patient cannot take this test!")
-			elif len(result) == 1:
-				if result[0][0] == patient:
-					print("  Patient can take this test")
+			for res in result:
+				print(res)
+				if res[0] == patient:
+					print("  Patient cannot take this test")
+					return False
+			print("  Patient can take this test")
 			return False
+
+			#if len(result) == 0:
+				#print("  Patient cannot take this test!")
+			#elif len(result) == 1:
+				#if result[0][0] == patient:
+					#print("  Patient can take this test")
 
 		except:
 			print("Error at checkAllowed via Name")
@@ -254,19 +260,27 @@ def checkAllowed(patient, testname, curs):
 			query = "SELECT DISTINCT p.health_care_no "
 			query += "FROM not_allowed n, patient p, test_type t "
 			query += "WHERE t.test_name LIKE '"+testname+"' "
-			query += "AND p.health_care_no <> n.health_care_no "
-			query += "AND t.type_id = n.test_id "
-			query += "AND p.health_care_no = " + str(patient)
+			query += "AND p.health_care_no = n.health_care_no "
+			query += "AND t.type_id = n.test_id"
+			#query += "AND p.health_care_no = " + str(patient)
 			curs.execute(query)
 			result = curs.fetchall()
 
-			if len(result) == 0:
-				print("  Patient cannot take this test!")
-			elif len(result) == 1:
-				if result[0][0] == patient:
-					print("  This patient can take the test")
-			#print(result)
+			for res in result:
+				print(res)
+				if res[0] == patient:
+					print("  Patient cannot take this test")
+					return False
+			print("  Patient can take this test")
 			return False
+
+			#if len(result) == 0:
+				#print("  Patient cannot take this test!")
+			#elif len(result) == 1:
+				#if result[0][0] == patient:
+					#print("  This patient can take the test")
+			#print(result)
+			#return False
 
 		except:
 			print("Error at checkAllowed via Id")

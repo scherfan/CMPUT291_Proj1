@@ -36,7 +36,8 @@ def findTestRecords(patient, curs):
 		query += "FROM patient p, test_type t, test_record r "
 		query += "WHERE p.health_care_no = " + str(patient_id) + " "
 		query += "AND p.name LIKE '"+patient_name+"' "
-		query += "AND r.patient_no = " + str(patient_id)
+		query += "AND t.type_id = r.type_id "
+		query += "AND r.patient_no = p.health_care_no" 
 		#print(query)
 		curs.execute(query)
 		results = curs.fetchall()
