@@ -231,7 +231,7 @@ def checkAllowed(patient, testname, curs):
 			query += "WHERE t.test_name LIKE '"+testname+"' "
 			query += "AND p.name LIKE '"+patient+"' " 
 			query += "AND p.health_care_no = n.health_care_no "
-			query += "AND t.type_id = n.test_id"
+			query += "AND t.type_id = n.type_id"
 			curs.execute(query)
 			result = curs.fetchall()
 
@@ -261,7 +261,7 @@ def checkAllowed(patient, testname, curs):
 			query += "FROM not_allowed n, patient p, test_type t "
 			query += "WHERE t.test_name LIKE '"+testname+"' "
 			query += "AND p.health_care_no = n.health_care_no "
-			query += "AND t.type_id = n.test_id"
+			query += "AND t.type_id = n.type_id"
 			#query += "AND p.health_care_no = " + str(patient)
 			curs.execute(query)
 			result = curs.fetchall()
@@ -271,7 +271,7 @@ def checkAllowed(patient, testname, curs):
 				if res[0] == patient:
 					print("  Patient cannot take this test")
 					return False
-			print("  Patient can take this test")
+			print("  Patient can take this test\n")
 			return False
 
 			#if len(result) == 0:
