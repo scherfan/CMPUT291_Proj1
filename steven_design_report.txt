@@ -1,0 +1,39 @@
+Doctor Search: searchDoctor.py
+
+The function searchDoctor takes in the connection to the oracle
+database and the cursor in order to execute queries. The function
+first asks for a doctor's employee number or the doctor's name. The
+function checks to see if a integer was entered or a string.
+
+The function then asks for a start date and following that an end
+date in the form of YYYY-MM-DD. Both inputs are checked to be formatted
+correctly and a month number cannot be out of the ranger 1:12.
+
+The search will query the oracle database for the doctor's information
+and all the prescriptions that the doctor has given within the
+specified date interval.
+
+
+Test Result Entry: enterTestResult.py
+
+The function enterTestResult takes in the connection to the oracle
+database and the cursor to execute queries and inserts. The first
+requirement of this function is to find existing est records in which
+to edit.
+
+A variable testID is assigned an int by calling the function
+findTestRecord which is also given the connection and cursor to the
+oracle database. findTestRecord asks the user to enter in information
+into fields or to leave them blank. Based on if the field is blank or
+not the function will query the database and print information stored
+in the database relevant to that query. The point of the search is to
+get a test ID, whether the user enters it first as that information is
+already known or finds the desired entry from a displayed list.
+
+enterTestResult now has a test ID stored in testID. Now the function
+will ask for information pertaining to the test record that will be
+entered into the database. If a field is left blank then that value in
+the database will not be changed. Each entry if the database returns
+an error will require the user to enter a value that will not return
+an error from the database. At the end if all is done successfully the
+function will print a success message and return to the main function.
