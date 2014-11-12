@@ -51,7 +51,7 @@ def enterTestResult(connection, curs):
             print("Oracle message:", error.message)
     if employeeNo != "":
         try:
-            query = "UPDATE test_record set employee_no=" + employee_no + " "
+            query = "UPDATE test_record set employee_no=" + employeeNo + " "
             query += "WHERE test_id = '" + testID + "'"
             curs.execute(query)
         except cx_Oracle.DatabaseError as exc:
