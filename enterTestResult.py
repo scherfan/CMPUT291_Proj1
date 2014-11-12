@@ -94,7 +94,14 @@ def enterTestResult(connection, curs):
             error, = exc.args
             print("Oracle code:", error.code)
             print("Oracle message:", error.message)
-
+    try:
+        query = "commit"
+        curs.execute(query)
+    except cx_Oracle.DatabaseError as exc:
+        error, = exc.args
+        print("Oracle code:", error.code)
+        print("Oracle message:", error.message)
+        
 def findTestRecord(connection, curs):
     i = 0
     while(1):
@@ -162,9 +169,8 @@ def findTestRecord(connection, curs):
         elif testID != "":
             try:
                 query = "SELECT r.* "
-                query += "FROM test_record r, patient p "
-                query += "WHERE r.patient_no = p.health_care_no AND "
-                query += "r.test_id = '" + testID + "'"
+                query += "FROM test_record r "
+                query += "WHERE r.test_id = '" + testID + "'"
                 curs.execute(query)
                 result = curs.fetchall()
             except cx_Oracle.DatabaseError as exc:
