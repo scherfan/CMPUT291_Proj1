@@ -267,7 +267,7 @@ def checkAllowed(patient, testname, curs):
 			result = curs.fetchall()
 
 			for res in result:
-				print(res)
+				#print(res)
 				if res[0] == patient:
 					print("  Patient cannot take this test")
 					return False
