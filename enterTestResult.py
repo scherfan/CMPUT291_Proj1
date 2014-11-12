@@ -23,77 +23,111 @@ def enterTestResult(connection, curs):
     testID = findTestRecord(connection, curs)
     print("Please enter prompted information, if information is unknown or unavailable leave blank " +
           "by pressing enter.")
-    typeID = input("Enter a test type ID: ")
-    patientNo = input("Enter a patient number or health care number: ")
-    employeeNo = input("Enter a employee number: ")
-    medicalLab = input("Enter lab name: ")
-    testResult = input("Enter test result: ")
-    prescribeDate = input("Enter the test's prescribed date(YYYY-MM-DD): ")
-    testDate = input("Enter the date when the test took place(YYYY-MM-DD): ")
 
-    if typeID != "":
-        try:
-            query = "UPDATE test_record set type_id=" + typeID + " "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if patientNo != "":
-        try:
-            query = "UPDATE test_record set patient_no=" + patientNo + " "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if employeeNo != "":
-        try:
-            query = "UPDATE test_record set employee_no=" + employeeNo + " "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if medicalLab != "":
-        try:
-            query = "UPDATE test_record set medical_lab=" + medicalLab + " "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if testResult != "":
-        try:
-            query = "UPDATE test_record set result=" + testResult + " "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if prescribeDate != "":
-        try:
-            query = "UPDATE test_record set prescribe_date=to_date('" + prescribeDate + "','YYYY-MM-DD') "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
-    if testDate != "":
-        try:
-            query = "UPDATE test_record set test_date=to_date('" + testDate + "','YYYY-MM-DD') "
-            query += "WHERE test_id = '" + testID + "'"
-            curs.execute(query)
-        except cx_Oracle.DatabaseError as exc:
-            error, = exc.args
-            print("Oracle code:", error.code)
-            print("Oracle message:", error.message)
+    while(1):
+        typeID = input("Enter a test type ID: ")
+        if typeID != "":
+            try:
+                query = "UPDATE test_record set type_id=" + typeID + " "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper test ID.")
+        else:
+            break
+    while(1):
+        patientNo = input("Enter a patient number or health care number: ")
+        if patientNo != "":
+            try:
+                query = "UPDATE test_record set patient_no=" + patientNo + " "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper patient number or health care number.")
+        else:
+            break
+    while(1):
+        employeeNo = input("Enter an employee number: ")
+        if employeeNo != "":
+            try:
+                query = "UPDATE test_record set employee_no=" + employeeNo + " "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper employee number.")
+        else:
+            break
+    while(1):
+        medicalLab = input("Enter a lab name: ")        
+        if medicalLab != "":
+            try:
+                query = "UPDATE test_record set medical_lab='" + medicalLab + "' "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper lab name.")
+        else:
+            break
+    while(1):
+        testResult = input("Enter a test result: ")
+        if testResult != "":
+            try:
+                query = "UPDATE test_record set result='" + testResult + "' "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+        else:
+            break
+    while(1):
+        prescribeDate = input("Enter the test's prescribed date(YYYY-MM-DD): ")        
+        if prescribeDate != "":
+            try:
+                query = "UPDATE test_record set prescribe_date=to_date('" + prescribeDate + "','YYYY-MM-DD') "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper prescribe date.")
+        else:
+            break
+    while(1):
+        testDate = input("Enter the date when the test took place(YYYY-MM-DD): ")
+        if testDate != "":
+            try:
+                query = "UPDATE test_record set test_date=to_date('" + testDate + "','YYYY-MM-DD') "
+                query += "WHERE test_id = '" + testID + "'"
+                curs.execute(query)
+                break
+            except cx_Oracle.DatabaseError as exc:
+                error, = exc.args
+                print("Oracle code:", error.code)
+                print("Oracle message:", error.message)
+                print("Enter a proper test date.")
+        else:
+            break
     try:
         query = "commit"
         curs.execute(query)
@@ -101,6 +135,10 @@ def enterTestResult(connection, curs):
         error, = exc.args
         print("Oracle code:", error.code)
         print("Oracle message:", error.message)
+
+    print()
+    print("Entry successful.")
+    print()
         
 def findTestRecord(connection, curs):
     i = 0
