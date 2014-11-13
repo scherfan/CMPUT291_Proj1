@@ -69,6 +69,7 @@ def insertTest(patient, doctor, test_num, testname, connection, curs):
 		query += "NULL, NULL, NULL, NULL)"
 		curs.execute(query)
 		connection.commit()
+		print("  Test prescribed")
 
 	except:
 		print('Error at addTest')
