@@ -32,7 +32,7 @@ def mainMenu(username):
     while result not in valid_input:
         result = input("\nEnter task number: ")
         if result not in valid_input:
-            print("Please enter a valid command")
+            print("  Please enter a valid command")
 
     return result
 

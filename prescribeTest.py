@@ -6,14 +6,16 @@ def prescribeTest(connection, curs):
 	error = True
 	while error == True:
 		doctor = input("\nDoctor Name (enter 1) or Doctor Id (enter 2): ")
-		if int(doctor) == 1:
+		if doctor == "1":
 			doctor_name = input("  Name of the Doctor: ")
 			error = checkForDoctorName(doctor_name, curs)
 			doctor = doctor_name
-		elif int(doctor) == 2:
+		elif doctor == "2":
 			doctor_id = input("  Employee Id of the Doctor: ")
 			error = checkForDoctorId(doctor_id, curs)
 			doctor = int(doctor_id)
+		else:
+			print("  Please enter a valid input")
 
 	# Finding the test type in test values
 	error = True
@@ -25,16 +27,18 @@ def prescribeTest(connection, curs):
 	error = True
 	while error == True:
 		patient = input("\nPatient Name (enter 1) or Patient Id (enter 2): ")
-		if int(patient) == 1:
+		if patient == "1":
 			patient_name = input("  Name of the Patient: ")
 			error = findPatientName(patient_name, curs)
 			if error == False:
 				patient = patient_name
-		elif int(patient) == 2:
+		elif patient == "2":
 			patient_id = input("  Health Care # of the Patient: ")
 			error = findPatientId(patient_id, curs)
 			if error == False:
 				patient = int(patient_id)
+		else:
+			print("  Please enter a valid input")
 
 	# Check if patient can take the test
 	error = checkAllowed(patient, testname, curs)
@@ -65,6 +69,7 @@ def insertTest(patient, doctor, test_num, testname, connection, curs):
 		query += "NULL, NULL, NULL, NULL)"
 		curs.execute(query)
 		connection.commit()
+		print("  Test prescribed")
 
 	except:
 		print('Error at addTest')

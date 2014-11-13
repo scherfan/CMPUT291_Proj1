@@ -5,8 +5,8 @@ stored in the database.
 """
 import cx_Oracle
 def searchDoctor(connection, curs):
-    print("Search for information of all tests prescribed by a given doctor"
-         " during a specific time period.")
+    print("Search for information of all tests prescribed by a given doctor")
+    print("during a specific time period.\n")   
     while(1):
         docID = input("Enter a name or employee number: ")
         if docID.isdigit() == True:

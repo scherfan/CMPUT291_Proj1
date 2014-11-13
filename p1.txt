@@ -1,0 +1,7 @@
+Prescribe Medical Test: prescribeTest.py
+
+A user is allowed to prescribe a test to a patient if the user can provide the name of the doctor or the doctors employee id, the name of the test that the patient is going to take, as well as the name of the patient or the patients health care number. At each point the system checks to see if a valid doctor has been entered, if the doctor is valid the user is prompted for the test name, otherwise the user must enter another doctor. The second step is to enter the test name, after entry the system will check to see if the test is in the database, if it is the user proceeds, if it is not the user must enter another test. The last step is to enter the patients name or health care number. The system will check to see if the patient is in the database and if the patient can take the test, if the patient is either not found or unable to take the test the user is asked to enter another patient. If all of the entries are valid a test record is added with the information provided by the user.
+
+Search Patient: searchPatient.py
+
+Patient information can be obtained by the user by searching for a patient by name or by health care number. The information displayed includes the patient name, health care number, name of the test taken by the patient, date the test took place and the result of the test. If no test records are available for a patient the user is told that no records can be displayed. The user is then taken back to the main menu for further system requests.
