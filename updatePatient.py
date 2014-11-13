@@ -175,8 +175,6 @@ def validate(birth):
     try:
         datetime.datetime.strptime(birth, "%Y-%m-%d")
         return True
-    except cx_Oracle.DatabaseError as ex:
-        error, = ex.args
-        print("Error message ="+str(error.message))
+    except:
         print("Must be valid date in format YYYY-MM-DD.")
         return False
