@@ -245,7 +245,7 @@ def checkAllowed(patient, testname, curs):
 				print(res)
 				if res[0] == patient:
 					print("  Patient cannot take this test")
-					return False
+					return True
 			print("  Patient can take this test")
 			return False
 
