@@ -1,4 +1,5 @@
 import cx_Oracle
+from prescribeTest import getTestId
 """
  Medical Test
  
@@ -23,12 +24,14 @@ def enterTestResult(connection, curs):
     testID = findTestRecord(connection, curs)
     print("Please enter prompted information, if information is unknown or unavailable leave blank " +
           "by pressing enter.")
-
+    
     while(1):
-        typeID = input("Enter a test type ID: ")
+        typeID = input("Enter test type name: ")
+        print(typeID)
+        typeID = getTestId(typeID, curs)
         if typeID != "":
             try:
-                query = "UPDATE test_record set type_id=" + typeID + " "
+                query = "UPDATE test_record set type_id=" + str(typeID) + " "
                 query += "WHERE test_id = '" + testID + "'"
                 curs.execute(query)
                 break
@@ -39,6 +42,7 @@ def enterTestResult(connection, curs):
                 print("Enter a proper test ID.")
         else:
             break
+        """
     while(1):
         patientNo = input("Enter a patient number or health care number: ")
         if patientNo != "":
@@ -84,6 +88,7 @@ def enterTestResult(connection, curs):
                 print("Enter a proper lab name.")
         else:
             break
+            """
     while(1):
         testResult = input("Enter a test result: ")
         if testResult != "":
@@ -141,6 +146,9 @@ def enterTestResult(connection, curs):
     print()
         
 def findTestRecord(connection, curs):
+    print("If the test ID is known then leave the other fields blank and fill in the known test ID.")
+    print("Other wise fill in known fields and use the printed list to enter the test ID when prompted.")
+    print("The test ID will appear as the first number in each list (Surrounded by []).")
     i = 0
     while(1):
         if i == 0 or i == 2:
