@@ -6,13 +6,15 @@ def searchPatient(connection, curs):
 	error = True
 	while error:
 		patient = input("\nPatient Name (enter 1) or Patient Health Care # (enter 2): ")
-		if int(patient) == 1:
+		if patient == "1":
 			patient = input("  Patient Name: ")
 			error = False
-		elif int(patient) == 2:
+		elif patient == "2":
 			patient = input("  Patient Health Care #: ")
 			patient = int(patient)
 			error = False
+		else:
+			print("  Please enter a valid input")
 
 	findTestRecords(patient, curs)
 
