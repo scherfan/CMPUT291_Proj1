@@ -86,8 +86,18 @@ def searchDoctor(connection, curs):
 
             curs.execute(query)
             result = curs.fetchall()
-            for res in result:
-                print(res)
+
+            i = 0
+            while i < len(result):
+                print("\nHealth care number: "+str(result[i][0]))
+                print("Name: "+result[i][1])
+                print("Test: "+result[i][2])
+                print("Date Prescribed: " + str(result[i][3]) + "\n")
+                i += 1
+
+            #for res in result:
+                #print(res)
+
         except cx_Oracle.DatabaseError as exc:
             error, = exc.args
             print("Oracle code:", error.code)
