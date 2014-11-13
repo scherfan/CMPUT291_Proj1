@@ -152,7 +152,7 @@ def findTestRecord(connection, curs):
     i = 0
     while(1):
         if i == 0 or i == 2:
-            print("Please fill in at least one of the fields, press enter to leave blank by pressing enter.")
+            print("Please fill in at least one of the fields, press enter to leave blank.")
             name = input("Enter a name of a patient: ")
             testID = input("Enter a test ID number: ")
             healthCareNo = input("Enter a health care number of a patient: ")

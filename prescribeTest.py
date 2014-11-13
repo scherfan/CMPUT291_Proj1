@@ -69,7 +69,7 @@ def insertTest(patient, doctor, test_num, testname, connection, curs):
 		query += "NULL, NULL, NULL, NULL)"
 		curs.execute(query)
 		connection.commit()
-		print("  Test prescribed")
+		print("  Test prescribed\n")
 
 	except:
 		print('Error at addTest')
@@ -244,7 +244,7 @@ def checkAllowed(patient, testname, curs):
 			for res in result:
 				print(res)
 				if res[0] == patient:
-					print("  Patient cannot take this test")
+					print("  Patient cannot take this test\n")
 					return True
 			print("  Patient can take this test")
 			return False
@@ -276,7 +276,7 @@ def checkAllowed(patient, testname, curs):
 				if res[0] == patient:
 					print("  Patient cannot take this test\n")
 					return True
-			print("  Patient can take this test\n")
+			print("  Patient can take this test")
 			return False
 
 			#if len(result) == 0:
