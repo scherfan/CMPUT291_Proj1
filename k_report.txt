@@ -1,0 +1,7 @@
+updatePatient
+This function takes a health care number as input and selects all the information about this patient, including the tests they are not allowed to take. If no patient is selected, this means that the patient doesn't exist yet and the functions newPatient and addTestNotAllowed are called to create a new patient and their tests not allowed. 
+
+If a patient is selected, then the patient's information is printed and the functions oldPatient and updateTestNotAllowed are called to update the patient's information. 
+
+updateTestNotAllowed
+

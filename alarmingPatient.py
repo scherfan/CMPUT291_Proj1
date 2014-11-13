@@ -6,27 +6,36 @@ def alarmingPatient(connection, curs):
         curs.execute(query)
         # create medical_risk view
         query2 = """
-CREATE VIEW medical_risk
-(medical_type, abnormal_rate, alarming_age) 
-AS
-SELECT tr3.type_id, COUNT(distinct tr1.test_id)/ COUNT(distinct tr2.test_id), Extract(YEAR from sysdate) - Extract(YEAR from p1.birth_day)
-FROM test_record tr1, test_record tr2, test_record tr3, test_record tr4, patient p1, patient p2
-WHERE tr1.type_id = tr2.type_id AND
-	tr2.type_id = tr3.type_id AND
-	tr3.type_id = tr4.type_id AND
-	tr3.patient_no = p1.health_care_no AND
-	tr4.patient_no = p2.health_care_no AND
-	Extract(YEAR from p1.birth_day) = Extract(YEAR from p2.birth_day) AND
-	tr1.result <> 'normal' AND
-	tr3.result <> 'normal'
-GROUP BY tr3.type_id, (Extract(YEAR from sysdate) - Extract(YEAR from p1.birth_day))
-HAVING (COUNT(distinct tr3.test_id) / COUNT(distinct tr4.test_id)) >= ALL(SELECT 2*(COUNT(distinct tr5.test_id) / COUNT(distinct tr6.test_id))
-										FROM test_record tr5, test_record tr6
-										WHERE tr5.type_id = tr6.type_id AND
-											tr5.result <> 'normal' AND
-											tr5.type_id = tr3.type_id
-										GROUP BY tr5.type_id
-										)"""
+CREATE VIEW medical_risk(medical_type,alarming_age,abnormal_rate) AS
+SELECT c1.type_id,min(c1.age),ab_rate
+FROM  
+      -- Find the abnormal rate for each test type
+     (SELECT   t1.type_id, count(distinct t1.patient_no)/count(distinct t2.patient_no) ab_rate
+      FROM     test_record t1, test_record t2
+      WHERE    t1.result <> 'normal' AND t1.type_id = t2.type_id
+      GROUP BY t1.type_id
+      ) r,
+	-- Find the abnormal result count above each age
+     (SELECT   t1.type_id,age,COUNT(distinct p1.health_care_no) AS ab_cnt
+      FROM     patient p1,test_record t1,
+               (SELECT DISTINCT trunc(months_between(sysdate,p1.birth_day)/12) AS age FROM patient p1) 
+      WHERE    trunc(months_between(sysdate,p1.birth_day)/12)>=age
+               AND p1.health_care_no=t1.patient_no
+               AND t1.result<>'normal'
+      GROUP BY age,t1.type_id
+      ) c1, 
+ 	 --- Find the patient count above each age
+      (SELECT  t1.type_id,age,COUNT(distinct p1.health_care_no) AS cnt
+       FROM    patient p1, test_record t1,
+      	       (SELECT DISTINCT trunc(months_between(sysdate,p1.birth_day)/12) AS age FROM patient p1)
+       WHERE trunc(months_between(sysdate,p1.birth_day)/12)>=age
+             AND p1.health_care_no=t1.patient_no
+       GROUP BY age,t1.type_id
+      ) c2
+WHERE  c1.age = c2.age AND c1.type_id = c2.type_id AND c1.type_id = r.type_id 
+       AND c1.ab_cnt/c2.cnt>=2*r.ab_rate
+GROUP BY c1.type_id,ab_rate"""
+
         curs.execute(query2)
         while (True):
             test = input("Input name of test: ")
@@ -40,25 +49,22 @@ HAVING (COUNT(distinct tr3.test_id) / COUNT(distinct tr4.test_id)) >= ALL(SELECT
                     print("Test doesn't exist.")
                 else:
                     # test does exist - get patient info from view
-                    query3 = """SELECT health_care_no, name, address, phone
-FROM (SELECT p.health_care_no, p.name, p.address, p.phone, m.medical_type
-	FROM patient p, medical_risk m
-	WHERE p.birth_day <= (sysdate - ((m.alarming_age-1)*365))
-	MINUS
-	SELECT distinct p1.health_care_no, p1.name, p1.address, p1.phone, m1.medical_type
-	FROM patient p1, test_record tr2, medical_risk m1
-	WHERE tr2.type_id = m1.medical_type AND
-		tr2.patient_no = p1.health_care_no
-	)
-WHERE medical_type IN (SELECT type_id
-                       FROM test_type
-                       WHERE test_name = '"""+test+"')"
+                    query3 = """SELECT DISTINCT health_care_no, name, address, phone
+FROM   patient p, medical_risk m, test_type tt
+WHERE  trunc(months_between(sysdate,birth_day)/12) >= m.alarming_age 
+AND
+       p.health_care_no NOT IN (SELECT patient_no
+                                FROM   test_record t
+                                WHERE  m.medical_type = t.type_id
+                               )
+AND tt.type_id = medical_type
+AND tt.test_name = '"""+test+"'"
                     try:
                         curs.execute(query3)
                         result = curs.fetchall()
                         if len(result) == 0:
                             # either no patients have taken the test or no patients of alarming age
-                            print("No patients of alarming age for this test.")
+                            print("No patients of alarming age for this test.\n")
                         i = 0
                         #print results
                         while (i < len(result)):
