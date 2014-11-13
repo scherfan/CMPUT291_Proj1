@@ -1,7 +1,16 @@
-updatePatient
-This function takes a health care number as input and selects all the information about this patient, including the tests they are not allowed to take. If no patient is selected, this means that the patient doesn't exist yet and the functions newPatient and addTestNotAllowed are called to create a new patient and their tests not allowed. 
+updatePatient.py
+The function updatePatient asks for a health care number from the user and selects all the information about this patient, including the tests they are not allowed to take. If no patient is selected, this means that the patient doesn't exist yet and the functions newPatient and addTestNotAllowed are called to create a new patient and add their tests not allowed. 
 
 If a patient is selected, then the patient's information is printed and the functions oldPatient and updateTestNotAllowed are called to update the patient's information. 
 
 updateTestNotAllowed
+The function prints the tests currently not allowed for the patient, and allows the user to enter new tests by calling the function addTestNotAllowed.
 
+addTestNotAllowed
+The function allows the user to add new tests not allowed for a patient, and checks if the test exists. 
+
+newPatient
+This lets the user enter the new patient's name, address, birth date, and phone number, and inserts these values into the patient table. It makes sure that the birth date is a valid date using the function validate. 
+
+oldPatient
+This function allows the user to update any information about the patient, including the patient's name, address, birth date, and phone number. The user can press enter to skip updating a field. The function calls validate to make sure the date entered is a valid date. 
