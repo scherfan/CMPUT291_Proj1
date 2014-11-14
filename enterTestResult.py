@@ -27,9 +27,8 @@ def enterTestResult(connection, curs):
     
     while(1):
         typeID = input("Enter test type name: ")
-        print(typeID)
-        typeID = getTestId(typeID, curs)
         if typeID != "":
+            typeID = getTestId(typeID, curs)
             try:
                 query = "UPDATE test_record set type_id=" + str(typeID) + " "
                 query += "WHERE test_id = '" + testID + "'"
@@ -42,53 +41,7 @@ def enterTestResult(connection, curs):
                 print("Enter a proper test ID.")
         else:
             break
-        """
-    while(1):
-        patientNo = input("Enter a patient number or health care number: ")
-        if patientNo != "":
-            try:
-                query = "UPDATE test_record set patient_no=" + patientNo + " "
-                query += "WHERE test_id = '" + testID + "'"
-                curs.execute(query)
-                break
-            except cx_Oracle.DatabaseError as exc:
-                error, = exc.args
-                print("Oracle code:", error.code)
-                print("Oracle message:", error.message)
-                print("Enter a proper patient number or health care number.")
-        else:
-            break
-    while(1):
-        employeeNo = input("Enter an employee number: ")
-        if employeeNo != "":
-            try:
-                query = "UPDATE test_record set employee_no=" + employeeNo + " "
-                query += "WHERE test_id = '" + testID + "'"
-                curs.execute(query)
-                break
-            except cx_Oracle.DatabaseError as exc:
-                error, = exc.args
-                print("Oracle code:", error.code)
-                print("Oracle message:", error.message)
-                print("Enter a proper employee number.")
-        else:
-            break
-    while(1):
-        medicalLab = input("Enter a lab name: ")        
-        if medicalLab != "":
-            try:
-                query = "UPDATE test_record set medical_lab='" + medicalLab + "' "
-                query += "WHERE test_id = '" + testID + "'"
-                curs.execute(query)
-                break
-            except cx_Oracle.DatabaseError as exc:
-                error, = exc.args
-                print("Oracle code:", error.code)
-                print("Oracle message:", error.message)
-                print("Enter a proper lab name.")
-        else:
-            break
-            """
+   
     while(1):
         testResult = input("Enter a test result: ")
         if testResult != "":
@@ -148,7 +101,6 @@ def enterTestResult(connection, curs):
 def findTestRecord(connection, curs):
     print("If the test ID is known then leave the other fields blank and fill in the known test ID.")
     print("Other wise fill in known fields and use the printed list to enter the test ID when prompted.")
-    print("The test ID will appear as the first number in each list (Surrounded by []).")
     i = 0
     while(1):
         if i == 0 or i == 2:
@@ -159,7 +111,12 @@ def findTestRecord(connection, curs):
             employeeNo = input("Enter a doctor employee number: ")
         else:
             print("Please enter desired test_id from list of records. Or leave it blank to search again.")
-            testID = input("Enter a test ID number: ")
+            while(1):
+                testID = input("Enter a test ID number: ")
+                if testID.isdigit() == True:
+                    break
+                else:
+                    print("Please enter an integer")
             if testID == "":
                 i = 1
         if testID == "":
@@ -202,12 +159,19 @@ def findTestRecord(connection, curs):
                 print("Query not found.\n")
                 i = 2
             else:
-                for res in resultName:
-                    print(res)
-                for res in resultHCN:
-                    print(res)
-                for res in resultEN:
-                    print(res)
+                for res in resultName, resultHCN, resultEN:
+                    for i in res:
+                        output = "Test ID: " + str(i[0]) + "\n"
+                        output += "Test type ID: " + str(i[1]) + "\n"
+                        output += "Patient number: " + str(i[2]) + "\n"
+                        output += "Employee Number: " + str(i[3]) + "\n"
+                        output += "Medical lab: " + i[4] + "\n"
+                        output += "Test result: " + i[5] + "\n"
+                        output += "Prescribe date: " + str(i[6]) + "\n"
+                        output += "Test date: " + str(i[7]) + "\n"
+
+                print(output)
+                
             if i == 0:
                 i = 1
             else:
