@@ -161,22 +161,22 @@ def findTestRecord(connection, curs):
                 i = 2
             else:
                 for res in resultName, resultHCN, resultEN:
-                    for i in res:
-                        output = "Test ID: " + str(i[0]) + "\n"
-                        output += "Test type ID: " + str(i[1]) + "\n"
-                        output += "Patient number: " + str(i[2]) + "\n"
-                        output += "Employee Number: " + str(i[3]) + "\n"
-                        output += "Medical lab: " + i[4] + "\n"
-                        output += "Test result: " + i[5] + "\n"
-                        output += "Prescribe date: " + str(i[6]) + "\n"
-                        output += "Test date: " + str(i[7]) + "\n"
+                    for r in res:
+                        output = "Test ID: " + str(r[0]) + "\n"
+                        output += "Test type ID: " + str(r[1]) + "\n"
+                        output += "Patient number: " + str(r[2]) + "\n"
+                        output += "Employee Number: " + str(r[3]) + "\n"
+                        output += "Medical lab: " + r[4] + "\n"
+                        output += "Test result: " + r[5] + "\n"
+                        output += "Prescribe date: " + str(r[6]) + "\n"
+                        output += "Test date: " + str(r[7]) + "\n"
 
                 print(output)
                 
-            if i == 0:
-                i = 1
-            else:
-                i = 0
+                if i == 0:
+                    i = 1
+                else:
+                    i = 0
         elif testID != "":
             try:
                 query = "SELECT r.* "
