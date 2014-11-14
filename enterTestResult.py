@@ -111,6 +111,7 @@ def findTestRecord(connection, curs):
             employeeNo = input("Enter a doctor employee number: ")
         else:
             print("Please enter desired test_id from list of records. Or leave it blank to search again.")
+
             while(1):
                 testID = input("Enter a test ID number: ")
                 if testID.isdigit() == True:
@@ -191,5 +192,14 @@ def findTestRecord(connection, curs):
                 print("Query not found.\n")
             else:
                 for res in result:
-                    print(res)
+                    output = "Test ID: " + str(res[0]) + "\n"
+                    output += "Test type ID: " + str(res[1]) + "\n"
+                    output += "Patient number: " + str(res[2]) + "\n"
+                    output += "Employee Number: " + str(res[3]) + "\n"
+                    output += "Medical lab: " + res[4] + "\n"
+                    output += "Test result: " + res[5] + "\n"
+                    output += "Prescribe date: " + str(res[6]) + "\n"
+                    output += "Test date: " + str(res[7]) + "\n"
+
+                print(output)
                 return testID
